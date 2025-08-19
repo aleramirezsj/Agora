@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AgoraContext))]
-    [Migration("20250814213652_TipoInscripcionYUsuario")]
-    partial class TipoInscripcionYUsuario
+    [Migration("20250819203628_agregamosCapacitacion2")]
+    partial class agregamosCapacitacion2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,67 @@ namespace Backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("Service.Models.Capacitacion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cupo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Detalle")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("FechaHora")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("InscripcionAbierta")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Ponente")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Capacitaciones");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Cupo = 30,
+                            Detalle = "Aprende los conceptos básicos de programación.",
+                            FechaHora = new DateTime(2025, 8, 29, 17, 36, 27, 453, DateTimeKind.Local).AddTicks(9348),
+                            InscripcionAbierta = true,
+                            IsDeleted = false,
+                            Nombre = "Introducción a la Programación",
+                            Ponente = "Carlos Gómez"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Cupo = 25,
+                            Detalle = "Crea aplicaciones web modernas con ASP.NET Core.",
+                            FechaHora = new DateTime(2025, 9, 8, 17, 36, 27, 453, DateTimeKind.Local).AddTicks(9371),
+                            InscripcionAbierta = true,
+                            IsDeleted = false,
+                            Nombre = "Desarrollo Web con ASP.NET Core",
+                            Ponente = "Ana Martínez"
+                        });
+                });
 
             modelBuilder.Entity("Service.Models.TipoInscripcion", b =>
                 {
@@ -86,6 +147,9 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -107,6 +171,7 @@ namespace Backend.Migrations
                             Id = 1,
                             DeleteDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
+                            IsDeleted = false,
                             Nombre = "Admin",
                             Password = "admin123",
                             TipoUsuario = 2
@@ -116,6 +181,7 @@ namespace Backend.Migrations
                             Id = 2,
                             DeleteDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "perez@gmail.com",
+                            IsDeleted = false,
                             Nombre = "Juan Perez",
                             Password = "juan123",
                             TipoUsuario = 0

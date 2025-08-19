@@ -4,6 +4,7 @@ using Backend.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AgoraContext))]
-    partial class AgoraContextModelSnapshot : ModelSnapshot
+    [Migration("20250819210437_agregamosTiposIncripcionesCapacitaciones")]
+    partial class agregamosTiposIncripcionesCapacitaciones
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,7 +67,7 @@ namespace Backend.Migrations
                             Id = 1,
                             Cupo = 30,
                             Detalle = "Aprende los conceptos básicos de programación.",
-                            FechaHora = new DateTime(2025, 8, 29, 18, 30, 3, 794, DateTimeKind.Local).AddTicks(3578),
+                            FechaHora = new DateTime(2025, 8, 29, 18, 4, 35, 763, DateTimeKind.Local).AddTicks(3824),
                             InscripcionAbierta = true,
                             IsDeleted = false,
                             Nombre = "Introducción a la Programación",
@@ -75,139 +78,11 @@ namespace Backend.Migrations
                             Id = 2,
                             Cupo = 25,
                             Detalle = "Crea aplicaciones web modernas con ASP.NET Core.",
-                            FechaHora = new DateTime(2025, 9, 8, 18, 30, 3, 794, DateTimeKind.Local).AddTicks(3603),
+                            FechaHora = new DateTime(2025, 9, 8, 18, 4, 35, 763, DateTimeKind.Local).AddTicks(3857),
                             InscripcionAbierta = true,
                             IsDeleted = false,
                             Nombre = "Desarrollo Web con ASP.NET Core",
                             Ponente = "Ana Martínez"
-                        });
-                });
-
-            modelBuilder.Entity("Service.Models.Inscripcion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Acreditado")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("CapacitacionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Dni")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<decimal>("Importe")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("Pagado")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<int>("TipoInscripcionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsuarioCobroId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CapacitacionId");
-
-                    b.HasIndex("TipoInscripcionId");
-
-                    b.HasIndex("UsuarioCobroId");
-
-                    b.ToTable("Inscripciones");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Acreditado = false,
-                            Apellido = "Gómez",
-                            CapacitacionId = 1,
-                            Dni = "12345678",
-                            Email = "carlos.gomez@gmail.com",
-                            Importe = 10000m,
-                            IsDeleted = false,
-                            Nombre = "Carlos",
-                            Pagado = false,
-                            TipoInscripcionId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Acreditado = false,
-                            Apellido = "Martínez",
-                            CapacitacionId = 1,
-                            Dni = "87654321",
-                            Email = "ana.martinez@gmail.com",
-                            Importe = 5000m,
-                            IsDeleted = false,
-                            Nombre = "Ana",
-                            Pagado = false,
-                            TipoInscripcionId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Acreditado = false,
-                            Apellido = "Pérez",
-                            CapacitacionId = 2,
-                            Dni = "11223344",
-                            Email = "juan.perez@gmail.com",
-                            Importe = 4000m,
-                            IsDeleted = false,
-                            Nombre = "Juan",
-                            Pagado = false,
-                            TipoInscripcionId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Acreditado = false,
-                            Apellido = "Lopez",
-                            CapacitacionId = 2,
-                            Dni = "44332211",
-                            Email = "maria.lopez@gmail.com",
-                            Importe = 3000m,
-                            IsDeleted = false,
-                            Nombre = "Maria",
-                            Pagado = false,
-                            TipoInscripcionId = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Acreditado = false,
-                            Apellido = "Fernandez",
-                            CapacitacionId = 2,
-                            Dni = "55667788",
-                            Email = "luis.fernandez@gmail.com",
-                            Importe = 12000m,
-                            IsDeleted = false,
-                            Nombre = "Luis",
-                            Pagado = false,
-                            TipoInscripcionId = 1
                         });
                 });
 
@@ -406,31 +281,6 @@ namespace Backend.Migrations
                             Password = "juan123",
                             TipoUsuario = 0
                         });
-                });
-
-            modelBuilder.Entity("Service.Models.Inscripcion", b =>
-                {
-                    b.HasOne("Service.Models.Capacitacion", "Capacitacion")
-                        .WithMany()
-                        .HasForeignKey("CapacitacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Service.Models.TipoInscripcion", "TipoInscripcion")
-                        .WithMany()
-                        .HasForeignKey("TipoInscripcionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Service.Models.Usuario", "UsuarioCobro")
-                        .WithMany()
-                        .HasForeignKey("UsuarioCobroId");
-
-                    b.Navigation("Capacitacion");
-
-                    b.Navigation("TipoInscripcion");
-
-                    b.Navigation("UsuarioCobro");
                 });
 
             modelBuilder.Entity("Service.Models.TipoInscripcionCapacitacion", b =>
