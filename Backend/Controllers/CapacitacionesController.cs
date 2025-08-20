@@ -28,6 +28,13 @@ namespace Backend.Controllers
             return await _context.Capacitaciones.ToListAsync();
         }
 
+        // GET: api/Capacitaciones
+        [HttpGet("deleteds/")]
+        public async Task<ActionResult<IEnumerable<Capacitacion>>> GetCapacitacionesDeleteds()
+        {
+            return await _context.Capacitaciones.IgnoreQueryFilters().Where(c=>c.IsDeleted).ToListAsync();
+        }
+
         // GET: api/Capacitaciones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Capacitacion>> GetCapacitacion(int id)
@@ -93,8 +100,24 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
+            capacitacion.IsDeleted = true; // Soft delete
+            _context.Capacitaciones.Update(capacitacion);
+            await _context.SaveChangesAsync();
 
-            _context.Capacitaciones.Remove(capacitacion);
+            return NoContent();
+        }
+
+        // PUT: api/Capacitaciones/restore/5
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreCapacitacion(int id)
+        {
+            var capacitacion = await _context.Capacitaciones.IgnoreQueryFilters().FirstOrDefaultAsync(c=>c.Id.Equals(id));
+            if (capacitacion == null)
+            {
+                return NotFound();
+            }
+            capacitacion.IsDeleted = false; // Soft restore
+            _context.Capacitaciones.Update(capacitacion);
             await _context.SaveChangesAsync();
 
             return NoContent();
