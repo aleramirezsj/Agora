@@ -93,8 +93,8 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-
-            _context.Inscripciones.Remove(inscripcion);
+            inscripcion.IsDeleted = true; // Soft delete
+            _context.Inscripciones.Update(inscripcion);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -104,5 +104,32 @@ namespace Backend.Controllers
         {
             return _context.Inscripciones.Any(e => e.Id == id);
         }
-    }
+
+        // PUT: api/Inscripciones/restore/5
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreInscripcion(int id)
+        {
+            var inscripcion = await _context.Inscripciones.IgnoreQueryFilters().FirstOrDefaultAsync(i=>i.Equals(id));
+            if (inscripcion == null)
+            {
+                return NotFound();
+            }
+            inscripcion.IsDeleted = false; // Restore the soft-deleted record
+            _context.Inscripciones.Update(inscripcion);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        // Get : api/Inscripciones/deleteds/
+        [HttpGet("deleteds")]
+        public async Task<ActionResult<IEnumerable<Inscripcion>>> GetDeletedInscripciones()
+        {
+            return await _context.Inscripciones.IgnoreQueryFilters().Where(i => i.IsDeleted).ToListAsync();
+        }
+
+
+
+
+
+        }
 }

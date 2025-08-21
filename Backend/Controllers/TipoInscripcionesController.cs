@@ -104,5 +104,27 @@ namespace Backend.Controllers
         {
             return _context.TipoInscripciones.Any(e => e.Id == id);
         }
+
+        // GET: api/TipoInscripciones/deleteds
+        [HttpGet("deleteds/")]
+        public async Task<ActionResult<IEnumerable<TipoInscripcion>>> GetTipoInscripcionesDeleteds()
+        {
+            return await _context.TipoInscripciones.IgnoreQueryFilters().Where(ti => ti.IsDeleted).ToListAsync();
+        }
+
+        // PUT: api/TipoInscripciones/restore/5
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreTipoInscripcion(int id)
+        {
+            var tipoInscripcion = await _context.TipoInscripciones.IgnoreQueryFilters().FirstOrDefaultAsync(ti => ti.Id == id);
+            if (tipoInscripcion == null)
+            {
+                return NotFound();
+            }
+            tipoInscripcion.IsDeleted = false;
+            _context.TipoInscripciones.Update(tipoInscripcion);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }
