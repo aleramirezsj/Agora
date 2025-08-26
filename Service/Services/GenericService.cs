@@ -27,9 +27,15 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.DeleteAsync($"{_endpoint}/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al eliminar el dato: {response.StatusCode}");
+            }
+            return response.IsSuccessStatusCode;
+
         }
 
         public async Task<List<T>?> GetAllAsync(string? filtro)
@@ -49,9 +55,15 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<T?> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync($"{_endpoint}/{id}");
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al obtener los datos: {response.StatusCode}");
+            }
+            return JsonSerializer.Deserialize<T>(content, _options);
         }
 
         public Task<bool> RestoreAsync(int id)

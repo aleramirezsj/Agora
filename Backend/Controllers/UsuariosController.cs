@@ -93,7 +93,8 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-
+            usuario.IsDeleted = true; // Soft delete
+            usuario.DeleteDate = DateTime.Now;
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
 
@@ -104,5 +105,27 @@ namespace Backend.Controllers
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
+        // GET: api/Usuarios/deleteds
+        [HttpGet("deleteds/")]
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuariosDeleteds()
+        {
+            return await _context.Usuarios.IgnoreQueryFilters().Where(u => u.IsDeleted).ToListAsync();
+        }
+        // PUT: api/Usuarios/restore/5
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreUsuario(int id)
+        {
+            var usuario = await _context.Usuarios.IgnoreQueryFilters().FirstOrDefaultAsync(u => u.Id == id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            usuario.IsDeleted = false;
+            usuario.DeleteDate = DateTime.MinValue;
+            _context.Usuarios.Update(usuario);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
     }
 }

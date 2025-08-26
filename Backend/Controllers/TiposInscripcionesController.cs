@@ -93,8 +93,8 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-
-            _context.TipoInscripciones.Remove(tipoInscripcion);
+            tipoInscripcion.IsDeleted = true;
+            _context.TipoInscripciones.Update(tipoInscripcion);
             await _context.SaveChangesAsync();
 
             return NoContent();

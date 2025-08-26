@@ -95,5 +95,33 @@ namespace TestAgora
             }
 
         }
+        [Fact]
+        public async void TestGetByIdTipoInscripcion()
+        {
+            // Arrange
+            var service = new GenericService<TipoInscripcion>();
+            int idToTest = 1; // Asumiendo que este ID existe en la base de datos
+            // Act
+            var result = await service.GetByIdAsync(idToTest);
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<TipoInscripcion>(result);
+            Assert.Equal(idToTest, result.Id);
+            Assert.Equal("Público en general", result.Nombre);
+            //imprimimos la inscripcion
+            Console.WriteLine($"Id: {result.Id}, Nombre: {result.Nombre}");
+        }
+        [Fact]
+        public async void TestDeleteInscripcion()
+        {
+            // Arrange
+            var service = new GenericService<Inscripcion>();
+            int idToDelete = 5; // Asumiendo que este ID existe en la base de datos
+            // Act
+            var result = await service.DeleteAsync(idToDelete);
+            // Assert
+            Assert.True(result);
+            Console.WriteLine($"TipoInscripcion con Id {idToDelete} eliminada exitosamente.");
+        }
     }
 }
