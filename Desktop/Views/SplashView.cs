@@ -16,5 +16,19 @@ namespace Desktop.Views
         {
             InitializeComponent();
         }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            ProgressBar.Value += 2;
+            if(ProgressBar.Value == 100)
+            {
+                Timer.Stop();
+                this.Hide();
+                var login = new LoginView();
+                login.ShowDialog();
+                this.Close();
+
+            }
+        }
     }
 }
