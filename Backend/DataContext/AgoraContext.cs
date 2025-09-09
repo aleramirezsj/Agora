@@ -18,6 +18,7 @@ namespace Backend.DataContext
             
         }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Cargamos los datos iniciales de tipo de inscripciones(Público en general, Docentes, Estudiantes, Jubilados)
