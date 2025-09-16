@@ -41,7 +41,7 @@ namespace Service.Services
 
         }
 
-        public async Task<List<T>?> GetAllAsync(string? filtro)
+        public async Task<List<T>?> GetAllAsync(string? filtro="")
         {
             var response= await _httpClient.GetAsync(_endpoint);
             var content = await response.Content.ReadAsStringAsync();
@@ -53,7 +53,7 @@ namespace Service.Services
 
         }
 
-        public async Task<List<T>?> GetAllDeletedsAsync(string? filtro)
+        public async Task<List<T>?> GetAllDeletedsAsync(string? filtro="")
         {
             var response = await _httpClient.GetAsync($"{_endpoint}/deleteds");
             var content = await response.Content.ReadAsStringAsync();
