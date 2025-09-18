@@ -47,7 +47,7 @@
                 try {
                     const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
                     console.log(userCredential);
-                    return userCredential.user.uid;
+                    return userCredential.user;
                 } catch (error) {
                     console.error("Error en autenticación:", error.message);
                     return null;
@@ -65,15 +65,11 @@
                     user.updateProfile({
                         displayName: displayName
                     });
+                    
+                     //Enviar correo de verificación
+                    user.sendEmailVerification();
+                        
                     return userCredential.user.uid;
-                    // Enviar correo de verificación
-                    //user.sendEmailVerification()
-                    //    .then(() => {
-                    //        console.log('Correo de verificación enviado.');
-                    //    })
-                    //    .catch((error) => {
-                    //        console.error('Error al enviar el correo de verificación:', error);
-                    //    });
 
 
 

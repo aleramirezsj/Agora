@@ -1,7 +1,7 @@
 ﻿@page "/login"
-@inject FirebaseAuthService firebaseAuthService
-@inject SweetAlertService sweetAlert
-@inject NavigationManager navigationManager
+@inject FirebaseAuthService _firebaseAuthService
+@inject SweetAlertService _sweetAlert
+@inject NavigationManager _navigationManager
 
 
 @if (!isAuthenticated)
@@ -63,11 +63,21 @@ else
     string email = string.Empty;
     string password = string.Empty;
 
+    protected override async Task OnInitializedAsync()
+    {
+        isAuthenticated = await _firebaseAuthService.IsUserAuthenticated();
+    }
+
     private async Task Loguear()
     {
-        var user = await firebaseAuthService.SignInWithEmailPassword(email, password);
+        var user = await _firebaseAuthService.SignInWithEmailPassword(email, password);
         if (user != null)
         {
+            if(user.EmailVerified == false)
+            {
+                await _sweetAlert.FireAsync("Verificación de correo", "Por favor, verifica tu correo electrónico antes de iniciar sesión.", SweetAlertIcon.Warning);
+                return;
+            }
             isAuthenticated = true;
             StateHasChanged();
             // Aquí podrías redirigir al usuario a otra página si es necesario
@@ -75,7 +85,7 @@ else
         else
         {
             // Manejar error de autenticación (mostrar mensaje, etc.)
-            await sweetAlert.FireAsync("Error de autenticación", "Correo o contraseña incorrectos.", SweetAlertIcon.Error);
+            await _sweetAlert.FireAsync("Error de autenticación", "Correo o contraseña incorrectos.", SweetAlertIcon.Error);
         }
         
     }
@@ -85,13 +95,13 @@ else
         isAuthenticated = false;
         email = string.Empty;
         password = string.Empty;
-        await firebaseAuthService.SignOut();
+        await _firebaseAuthService.SignOut();
         StateHasChanged();
     }
 
     private async Task RegisterMe()
     {
-        navigationManager.NavigateTo("/signin");
+        _navigationManager.NavigateTo("/signin");
         
     }
 
