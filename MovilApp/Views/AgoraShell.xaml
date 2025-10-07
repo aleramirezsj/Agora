@@ -22,9 +22,15 @@
     <Shell.FlyoutFooter>
         <contentviews:FlyoutFooter />
     </Shell.FlyoutFooter>
-
+        
+    <ShellContent
+        Title="Iniciar sesión"
+        ContentTemplate="{DataTemplate login:LoginView}"
+        Route="Login"
+        FlyoutItemIsVisible="False"/>
+        
     <FlyoutItem Route="nuestra_app" 
-        FlyoutDisplayOptions="AsMultipleItems" x:Name="FlyoutItemsPrincipal" >
+        FlyoutDisplayOptions="AsMultipleItems" >
         <ShellContent
             Title="Home"
             ContentTemplate="{DataTemplate local:MainPage}"
@@ -55,10 +61,6 @@
       Command="{Binding LogoutCommand}"
       IconImageSource="random.png"/>
 
-    <ShellContent
-        Title="Iniciar sesión"
-        ContentTemplate="{DataTemplate login:LoginView}"
-        Route="Login" 
-        IsVisible="{Binding UserIsLogout}"/>
+
 
 </Shell>
