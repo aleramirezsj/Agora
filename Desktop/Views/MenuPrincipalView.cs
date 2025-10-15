@@ -28,5 +28,20 @@ namespace Desktop
             capacitacionesView.MdiParent = this;
             capacitacionesView.Show();
         }
+
+        private void SubMenuTiposDeInscripciones_Click(object sender, EventArgs e)
+        {
+            var tipoInscripcionView = new TipoInscripcionView();
+            tipoInscripcionView.MdiParent = this;
+            tipoInscripcionView.Show();
+        }
+
+        private void SubmenuInscripciones_Click(object sender, EventArgs e)
+        {
+            var inscripcionesView = new InscripcionesView();
+            inscripcionesView.MdiParent = this;
+            inscripcionesView.Show();
+
+        }
     }
 }

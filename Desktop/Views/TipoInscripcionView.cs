@@ -172,11 +172,11 @@ namespace Desktop.Views
             //checheamos que haya peliculas seleccionadas
             if (DataGrid.RowCount > 0 && DataGrid.SelectedRows.Count > 0)
             {
-                Capacitacion entitySelected = (Capacitacion)DataGrid.SelectedRows[0].DataBoundItem;
-                var respuesta = MessageBox.Show($"¿Seguro que recuper la capacitación {entitySelected.Nombre}?", "Confirmar Restauración", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                TipoInscripcion entitySelected = (TipoInscripcion)DataGrid.SelectedRows[0].DataBoundItem;
+                var respuesta = MessageBox.Show($"¿Seguro que desea recuperar el tipo de inscripción {entitySelected.Nombre}?", "Confirmar Restauración", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (respuesta == DialogResult.Yes)
                 {
-                    if (await _capacitacionService.RestoreAsync(entitySelected.Id))
+                    if (await _tipoInscripcionService.RestoreAsync(entitySelected.Id))
                     {
                         LabelStatusMessage.Text = $"Capacitación {entitySelected.Nombre} restaurada correctamente";
                         TimerStatusBar.Start(); // Iniciar el temporizador para mostrar el mensaje en la barra de estado
