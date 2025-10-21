@@ -19,7 +19,7 @@ namespace TestAgora
             foreach (var item in result)
             {
                 //imprimimos las capacitaciones
-                Console.WriteLine($"Id: {item.Id}, Nombre: {item.Nombre}");
+                Console.WriteLine($"Id: {item.Id}, Nombre: {item?.Usuario?.Nombre}");
             }
 
         }
