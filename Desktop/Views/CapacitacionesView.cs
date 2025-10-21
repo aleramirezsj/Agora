@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Desktop.ExtensionMethod;
 using Service.Models;
 using Service.Services;
 
@@ -6,7 +7,8 @@ namespace Desktop.Views
 {
     public partial class CapacitacionesView : Form
     {
-        GenericService<Capacitacion> _capacitacionService = new GenericService<Capacitacion>();
+        GenericService<Capacitacion> _capacitacionService = new();
+        GenericService<TipoInscripcion> _tipoInscripcionService = new();
         Capacitacion _currentCapacitacion;
         List<Capacitacion>? _capacitaciones;
 
@@ -19,7 +21,7 @@ namespace Desktop.Views
 
         private void DisplayHideControlsRestoreButton(object? sender, EventArgs e)
         {
-            BtnRestaurar.Visible=checkVerEliminados.Checked;
+            BtnRestaurar.Visible = checkVerEliminados.Checked;
             TxtBuscar.Enabled = !checkVerEliminados.Checked;
             BtnModificar.Enabled = !checkVerEliminados.Checked;
             BtnEliminar.Enabled = !checkVerEliminados.Checked;
@@ -37,7 +39,15 @@ namespace Desktop.Views
             DataGrid.DataSource = _capacitaciones;
             DataGrid.Columns["Id"].Visible = false; // Ocultar la columna Pais
             DataGrid.Columns["IsDeleted"].Visible = false; // Ocultar la columna Eliminado
+            await GetComboTiposDeInscripciones();
 
+        }
+
+        private async Task GetComboTiposDeInscripciones()
+        {
+            ComboTiposInscripciones.DataSource = await _tipoInscripcionService.GetAllAsync();
+            ComboTiposInscripciones.DisplayMember = "Nombre";
+            ComboTiposInscripciones.ValueMember = "Id";
         }
 
         private void GridPeliculas_SelectionChanged_1(object sender, EventArgs e)
@@ -95,7 +105,8 @@ namespace Desktop.Views
             checkInscripcionAbierta.Checked = false;
             NumericCupo.Value = 0;
             TxtDetalle.Clear();
-            
+            GridTiposDeInscripciones.DataSource = null;
+
         }
 
         private void BtnCancelar_Click(object sender, EventArgs e)
@@ -133,7 +144,7 @@ namespace Desktop.Views
                 TimerStatusBar.Start(); // Iniciar el temporizador para mostrar el mensaje en la barra de estado
                 await GetAllData();
                 LimpiarControlesAgregarEditar();
-                TabControl.SelectedTab=TabPageLista;
+                TabControl.SelectedTab = TabPageLista;
             }
             else
             {
@@ -210,6 +221,28 @@ namespace Desktop.Views
             {
                 MessageBox.Show("Debe seleccionar una capacitación para restaurarla", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void BtnAniadir_Click(object sender, EventArgs e)
+        {
+            var tipoInscripcionCapacitacion = new TipoInscripcionCapacitacion
+            {
+                TipoInscripcionId = (int)ComboTiposInscripciones.SelectedValue,
+                TipoInscripcion = (TipoInscripcion)ComboTiposInscripciones.SelectedItem,
+                CapacitacionId = _currentCapacitacion?.Id ?? 0,
+                Capacitacion = _currentCapacitacion,
+                Costo = numericCosto.Value
+            };
+            _currentCapacitacion?.TiposDeInscripciones.Add(tipoInscripcionCapacitacion);
+            GridTiposDeInscripciones.DataSource = _currentCapacitacion?.TiposDeInscripciones.ToList();
+            GridTiposDeInscripciones.HideColumns("Id", "CapacitacionId", "Capacitacion", "TipoInscripcionId", "IsDeleted");
+        }
+
+        private void BtnQuitar_Click(object sender, EventArgs e)
+        {
+            var tipoInscripcionCapacitacionSeleccionado = (TipoInscripcionCapacitacion)GridTiposDeInscripciones.SelectedRows[0].DataBoundItem;
+            _currentCapacitacion?.TiposDeInscripciones.Remove(tipoInscripcionCapacitacionSeleccionado);
+            GridTiposDeInscripciones.DataSource = _currentCapacitacion?.TiposDeInscripciones.ToList();
         }
     }
 }
