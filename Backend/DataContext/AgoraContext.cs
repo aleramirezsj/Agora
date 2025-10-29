@@ -22,6 +22,8 @@ namespace Backend.DataContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
+
             // Cargamos los datos iniciales de tipo de inscripciones(Público en general, Docentes, Estudiantes, Jubilados)
             modelBuilder.Entity<TipoInscripcion>().HasData(
                 new TipoInscripcion { Id = 1, Nombre = "Público en general" },
