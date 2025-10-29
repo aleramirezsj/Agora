@@ -12,6 +12,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+builder.Services.AddScoped<IInscripcionService, InscripcionService>();
+builder.Services.AddScoped<ICapacitacionService, CapacitacionService>();
 builder.Services.AddSingleton<FirebaseAuthService>();
 builder.Services.AddSweetAlert2();
 

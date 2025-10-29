@@ -6,10 +6,8 @@
 
 @if (!isAuthenticated)
 {
+    <PageHeader Title="Iniciar sesión" />
     <div class="card text-center">
-        <div class="card-header">
-            Iniciar sesión
-        </div>
         <div class="card-body">
             <h3 class="card-title">Bienvenido a Ágora</h3>
             <div class="container">
@@ -50,22 +48,7 @@
         </div>
     </div>
 }
-else
-{
-    <div class="card text-center">
-        <div class="card-header">
-            Cerrar sesión
-        </div>
-        <div class="card-body">
-            <p class="card-header">Cerrar sesión de Ágora</p>
 
-            <button class="btn btn-primary" @onclick="Desloguear">Cerrar sesión</button>
-        </div>
-        <div class="card-footer text-body-secondary">
-            Desarrollo 2do año - TSDS - 2025
-        </div>
-    </div>
-}
 
 @code {
     bool isAuthenticated = false;
@@ -76,6 +59,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         isAuthenticated = await _firebaseAuthService.IsUserAuthenticated();
+        if(isAuthenticated)
+        {
+            _navigationManager.NavigateTo("/perfilusuario");
+        }
     }
 
     private async Task Loguear()
@@ -89,7 +76,7 @@ else
                 return;
             }
             isAuthenticated = true;
-            StateHasChanged();
+            _navigationManager.NavigateTo("/perfilusuario");
             // Aquí podrías redirigir al usuario a otra página si es necesario
         }
         else
@@ -120,7 +107,7 @@ else
         if (user != null)
         {
             isAuthenticated = true;
-            StateHasChanged();
+            _navigationManager.NavigateTo("/perfilusuario");
             // Aquí podrías redirigir al usuario a otra página si es necesario
         }
         else
