@@ -164,6 +164,7 @@ namespace Desktop.Views
                 DateTimeFechaHora.Value = _currentCapacitacion.FechaHora;
                 NumericCupo.Value = _currentCapacitacion.Cupo;
                 checkInscripcionAbierta.Checked = _currentCapacitacion.InscripcionAbierta;
+                GridTiposDeInscripciones.DataSource = _currentCapacitacion.TiposDeInscripciones;
 
 
                 TabControl.SelectedTab = TabPageAgregarEditar;
