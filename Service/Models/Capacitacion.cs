@@ -19,8 +19,6 @@ namespace Service.Models
 
         public ICollection<TipoInscripcionCapacitacion> TiposDeInscripciones { get; set; } = new List<TipoInscripcionCapacitacion>();
 
-
-
         public override string ToString()
         {
             return Nombre;

@@ -42,6 +42,10 @@
             BtnAgregar = new FontAwesome.Sharp.IconButton();
             BtnModificar = new FontAwesome.Sharp.IconButton();
             TabPageAgregarEditar = new TabPage();
+            TxtPassword2 = new TextBox();
+            LabelPassword2 = new Label();
+            TxtPassword = new TextBox();
+            LabelPassword = new Label();
             TxtEmail = new TextBox();
             label5 = new Label();
             ComboTiposDeUsuarios = new ComboBox();
@@ -59,10 +63,6 @@
             statusStrip1 = new StatusStrip();
             LabelStatusMessage = new ToolStripStatusLabel();
             TimerStatusBar = new System.Windows.Forms.Timer(components);
-            TxtPassword = new TextBox();
-            label7 = new Label();
-            TxtVerifyPassword = new TextBox();
-            label9 = new Label();
             TabControl.SuspendLayout();
             TabPageLista.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGrid).BeginInit();
@@ -246,10 +246,10 @@
             // 
             // TabPageAgregarEditar
             // 
-            TabPageAgregarEditar.Controls.Add(TxtVerifyPassword);
-            TabPageAgregarEditar.Controls.Add(label9);
+            TabPageAgregarEditar.Controls.Add(TxtPassword2);
+            TabPageAgregarEditar.Controls.Add(LabelPassword2);
             TabPageAgregarEditar.Controls.Add(TxtPassword);
-            TabPageAgregarEditar.Controls.Add(label7);
+            TabPageAgregarEditar.Controls.Add(LabelPassword);
             TabPageAgregarEditar.Controls.Add(TxtEmail);
             TabPageAgregarEditar.Controls.Add(label5);
             TabPageAgregarEditar.Controls.Add(ComboTiposDeUsuarios);
@@ -270,17 +270,53 @@
             TabPageAgregarEditar.Text = "Agregar/Editar";
             TabPageAgregarEditar.UseVisualStyleBackColor = true;
             // 
+            // TxtPassword2
+            // 
+            TxtPassword2.Location = new Point(265, 343);
+            TxtPassword2.Name = "TxtPassword2";
+            TxtPassword2.PasswordChar = '*';
+            TxtPassword2.PlaceholderText = "Mínimo 6 caracteres";
+            TxtPassword2.Size = new Size(1082, 31);
+            TxtPassword2.TabIndex = 35;
+            // 
+            // LabelPassword2
+            // 
+            LabelPassword2.Location = new Point(30, 346);
+            LabelPassword2.Name = "LabelPassword2";
+            LabelPassword2.Size = new Size(210, 28);
+            LabelPassword2.TabIndex = 36;
+            LabelPassword2.Text = "Repetir contraseña:";
+            LabelPassword2.TextAlign = ContentAlignment.TopRight;
+            // 
+            // TxtPassword
+            // 
+            TxtPassword.Location = new Point(265, 277);
+            TxtPassword.Name = "TxtPassword";
+            TxtPassword.PasswordChar = '*';
+            TxtPassword.PlaceholderText = "Mínimo 6 caracteres";
+            TxtPassword.Size = new Size(1082, 31);
+            TxtPassword.TabIndex = 33;
+            // 
+            // LabelPassword
+            // 
+            LabelPassword.Location = new Point(30, 277);
+            LabelPassword.Name = "LabelPassword";
+            LabelPassword.Size = new Size(210, 28);
+            LabelPassword.TabIndex = 34;
+            LabelPassword.Text = "Contraseña:";
+            LabelPassword.TextAlign = ContentAlignment.TopRight;
+            // 
             // TxtEmail
             // 
-            TxtEmail.Location = new Point(217, 211);
+            TxtEmail.Location = new Point(265, 211);
             TxtEmail.Name = "TxtEmail";
-            TxtEmail.Size = new Size(1130, 31);
+            TxtEmail.Size = new Size(1082, 31);
             TxtEmail.TabIndex = 31;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(148, 214);
+            label5.Location = new Point(184, 214);
             label5.Name = "label5";
             label5.Size = new Size(58, 25);
             label5.TabIndex = 32;
@@ -289,7 +325,7 @@
             // ComboTiposDeUsuarios
             // 
             ComboTiposDeUsuarios.FormattingEnabled = true;
-            ComboTiposDeUsuarios.Location = new Point(217, 417);
+            ComboTiposDeUsuarios.Location = new Point(265, 417);
             ComboTiposDeUsuarios.Name = "ComboTiposDeUsuarios";
             ComboTiposDeUsuarios.Size = new Size(305, 33);
             ComboTiposDeUsuarios.TabIndex = 30;
@@ -297,7 +333,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(67, 417);
+            label8.Location = new Point(103, 417);
             label8.Name = "label8";
             label8.Size = new Size(139, 25);
             label8.TabIndex = 29;
@@ -305,15 +341,15 @@
             // 
             // TxtDni
             // 
-            TxtDni.Location = new Point(217, 146);
+            TxtDni.Location = new Point(265, 146);
             TxtDni.Name = "TxtDni";
-            TxtDni.Size = new Size(1130, 31);
+            TxtDni.Size = new Size(1082, 31);
             TxtDni.TabIndex = 3;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(163, 149);
+            label6.Location = new Point(199, 149);
             label6.Name = "label6";
             label6.Size = new Size(43, 25);
             label6.TabIndex = 24;
@@ -321,15 +357,15 @@
             // 
             // TxtApellido
             // 
-            TxtApellido.Location = new Point(217, 90);
+            TxtApellido.Location = new Point(265, 90);
             TxtApellido.Name = "TxtApellido";
-            TxtApellido.Size = new Size(1130, 31);
+            TxtApellido.Size = new Size(1082, 31);
             TxtApellido.TabIndex = 2;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(124, 93);
+            label4.Location = new Point(160, 93);
             label4.Name = "label4";
             label4.Size = new Size(82, 25);
             label4.TabIndex = 16;
@@ -337,15 +373,15 @@
             // 
             // TxtNombre
             // 
-            TxtNombre.Location = new Point(217, 34);
+            TxtNombre.Location = new Point(265, 34);
             TxtNombre.Name = "TxtNombre";
-            TxtNombre.Size = new Size(1130, 31);
+            TxtNombre.Size = new Size(1082, 31);
             TxtNombre.TabIndex = 1;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(124, 40);
+            label3.Location = new Point(160, 40);
             label3.Name = "label3";
             label3.Size = new Size(82, 25);
             label3.TabIndex = 0;
@@ -424,40 +460,6 @@
             TimerStatusBar.Interval = 5000;
             TimerStatusBar.Tick += TimerStatusBar_Tick;
             // 
-            // TxtPassword
-            // 
-            TxtPassword.Location = new Point(217, 277);
-            TxtPassword.Name = "TxtPassword";
-            TxtPassword.PasswordChar = '*';
-            TxtPassword.Size = new Size(1130, 31);
-            TxtPassword.TabIndex = 33;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(99, 280);
-            label7.Name = "label7";
-            label7.Size = new Size(105, 25);
-            label7.TabIndex = 34;
-            label7.Text = "Contraseña:";
-            // 
-            // TxtVerifyPassword
-            // 
-            TxtVerifyPassword.Location = new Point(217, 343);
-            TxtVerifyPassword.Name = "TxtVerifyPassword";
-            TxtVerifyPassword.PasswordChar = '*';
-            TxtVerifyPassword.Size = new Size(1130, 31);
-            TxtVerifyPassword.TabIndex = 35;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(42, 346);
-            label9.Name = "label9";
-            label9.Size = new Size(162, 25);
-            label9.TabIndex = 36;
-            label9.Text = "Repetir contraseña:";
-            // 
             // UsuariosView
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -516,13 +518,13 @@
         private ComboBox ComboTiposDeUsuarios;
         private Label label8;
         private CheckBox checkInscripcionAbierta;
-        private Label label9;
+        private Label LabelPassword2;
         private NumericUpDown numericCosto;
         private DataGridView GridTiposDeInscripciones;
         private FontAwesome.Sharp.IconButton BtnQuitar;
         private FontAwesome.Sharp.IconButton BtnAniadir;
         private TextBox TxtPassword;
-        private Label label7;
-        private TextBox TxtVerifyPassword;
+        private Label LabelPassword;
+        private TextBox TxtPassword2;
     }
 }

@@ -25,56 +25,43 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Capacitacion>>> GetCapacitaciones([FromQuery] string? filter = "")
         {
-            var query = _context.Capacitaciones.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(filter))
-            {
-                var pattern = $"%{filter}%";
-                query = query.Where(c => EF.Functions.Like(c.Nombre, pattern)
-                                       || EF.Functions.Like(c.Detalle, pattern)
-                                       || EF.Functions.Like(c.Ponente, pattern));
-            }
-
-            return await query.ToListAsync();
+            return await _context.Capacitaciones.AsNoTracking()
+                            .Include(c=> c.TiposDeInscripciones)
+                            .Where(c => c.Nombre.Contains(filter, StringComparison.OrdinalIgnoreCase)
+                                || c.Detalle.Contains(filter, StringComparison.OrdinalIgnoreCase)
+                                || c.Ponente.Contains(filter, StringComparison.OrdinalIgnoreCase))
+                            .ToListAsync();
         }
 
         [HttpGet("abiertas")]
         public async Task<ActionResult<IEnumerable<Capacitacion>>> GetCapacitacionesAbiertas([FromQuery] string? filter = "")
         {
-            var query = _context.Capacitaciones.Where(c => c.InscripcionAbierta);
-
-            if (!string.IsNullOrWhiteSpace(filter))
-            {
-                var pattern = $"%{filter}%";
-                query = query.Where(c => EF.Functions.Like(c.Nombre, pattern)
-                                       || EF.Functions.Like(c.Detalle, pattern)
-                                       || EF.Functions.Like(c.Ponente, pattern));
-            }
-
-            return await query.ToListAsync();
+            return await _context.Capacitaciones.AsNoTracking()
+                                .Include(c => c.TiposDeInscripciones)
+                                .Where(c => c.InscripcionAbierta && 
+                                        (c.Nombre.Contains(filter)
+                                            || c.Detalle.Contains(filter) 
+                                            || c.Ponente.Contains(filter))).ToListAsync();
         }
-
         [HttpGet("futuras")]
         public async Task<ActionResult<IEnumerable<Capacitacion>>> GetCapacitacionesFuturas([FromQuery] string? filter = "")
         {
-            var query = _context.Capacitaciones.Where(c => !c.InscripcionAbierta && c.FechaHora.Date > DateTime.Now.Date);
-
-            if (!string.IsNullOrWhiteSpace(filter))
-            {
-                var pattern = $"%{filter}%";
-                query = query.Where(c => EF.Functions.Like(c.Nombre, pattern)
-                                       || EF.Functions.Like(c.Detalle, pattern)
-                                       || EF.Functions.Like(c.Ponente, pattern));
-            }
-
-            return await query.ToListAsync();
+            return await _context.Capacitaciones.AsNoTracking()
+                                .Include(c => c.TiposDeInscripciones)
+                                .Where(c => !c.InscripcionAbierta 
+                                        && c.FechaHora.Date > DateTime.Now.Date 
+                                        && (c.Nombre.Contains(filter) 
+                                            || c.Detalle.Contains(filter) 
+                                            || c.Ponente.Contains(filter)))
+                                .ToListAsync();
         }
 
         // GET: api/Capacitaciones
         [HttpGet("deleteds/")]
         public async Task<ActionResult<IEnumerable<Capacitacion>>> GetCapacitacionesDeleteds()
         {
-            return await _context.Capacitaciones.IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
+            return await _context.Capacitaciones.AsNoTracking()
+                                .IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
         }
 
         // GET: api/Capacitaciones/5
