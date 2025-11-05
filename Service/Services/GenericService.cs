@@ -15,8 +15,8 @@ namespace Service.Services
         public GenericService() {
             _httpClient = new HttpClient();
             _options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
-            _endpoint= Properties.Resources.UrlApi+ApiEndpoints.GetEndpoint(typeof(T).Name);
-            //_endpoint = Properties.Resources.UrlApiLocal + ApiEndpoints.GetEndpoint(typeof(T).Name);
+            //_endpoint= Properties.Resources.UrlApi+ApiEndpoints.GetEndpoint(typeof(T).Name);
+            _endpoint = Properties.Resources.UrlApiLocal + ApiEndpoints.GetEndpoint(typeof(T).Name);
 
         }
         public async Task<T?> AddAsync(T? entity)
@@ -89,9 +89,10 @@ namespace Service.Services
         {
             var idValue=entity.GetType().GetProperty("Id").GetValue(entity);
             var response= await _httpClient.PutAsJsonAsync($"{_endpoint}/{idValue}", entity);
+            var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception("Hubo un problema al actualizar");
+                throw new Exception($"Hubo un problema al actualizar{ response.StatusCode } - { content}");
             } else
             {
                 return response.IsSuccessStatusCode;
