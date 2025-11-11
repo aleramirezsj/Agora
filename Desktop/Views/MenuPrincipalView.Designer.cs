@@ -38,6 +38,7 @@
             SubMenuSalir = new FontAwesome.Sharp.IconMenuItem();
             SubMenuSalirDelSistema = new FontAwesome.Sharp.IconMenuItem();
             toolStrip1 = new ToolStrip();
+            SubmenuAcreditaciones = new FontAwesome.Sharp.IconMenuItem();
             menuPrincipal.SuspendLayout();
             SuspendLayout();
             // 
@@ -53,7 +54,7 @@
             // 
             // SubMenuPrincipal
             // 
-            SubMenuPrincipal.DropDownItems.AddRange(new ToolStripItem[] { SubMenuUsuarios, subMenuCapacitaciones, SubMenuTiposDeInscripciones, toolStripSeparator1, SubmenuInscripciones });
+            SubMenuPrincipal.DropDownItems.AddRange(new ToolStripItem[] { SubMenuUsuarios, subMenuCapacitaciones, SubMenuTiposDeInscripciones, toolStripSeparator1, SubmenuInscripciones, SubmenuAcreditaciones });
             SubMenuPrincipal.IconChar = FontAwesome.Sharp.IconChar.HomeLg;
             SubMenuPrincipal.IconColor = Color.Black;
             SubMenuPrincipal.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -135,6 +136,16 @@
             toolStrip1.TabIndex = 2;
             toolStrip1.Text = "toolStrip1";
             // 
+            // SubmenuAcreditaciones
+            // 
+            SubmenuAcreditaciones.IconChar = FontAwesome.Sharp.IconChar.CheckCircle;
+            SubmenuAcreditaciones.IconColor = Color.Black;
+            SubmenuAcreditaciones.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            SubmenuAcreditaciones.Name = "SubmenuAcreditaciones";
+            SubmenuAcreditaciones.Size = new Size(289, 34);
+            SubmenuAcreditaciones.Text = "Acreditaciones";
+            SubmenuAcreditaciones.Click += SubmenuAcreditaciones_Click;
+            // 
             // MenuPrincipalView
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -165,5 +176,6 @@
         private FontAwesome.Sharp.IconMenuItem SubMenuTiposDeInscripciones;
         private ToolStripSeparator toolStripSeparator1;
         private FontAwesome.Sharp.IconMenuItem SubmenuInscripciones;
+        private FontAwesome.Sharp.IconMenuItem SubmenuAcreditaciones;
     }
 }

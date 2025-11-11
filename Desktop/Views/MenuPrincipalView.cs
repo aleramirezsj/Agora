@@ -43,5 +43,12 @@ namespace Desktop
             inscripcionesView.Show();
 
         }
+
+        private void SubmenuAcreditaciones_Click(object sender, EventArgs e)
+        {
+            var acreditacionesView = new AcreditacionesView();
+            acreditacionesView.MdiParent = this;
+            acreditacionesView.Show();
+        }
     }
 }
