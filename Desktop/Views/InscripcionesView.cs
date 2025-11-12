@@ -1,4 +1,5 @@
 ﻿using Desktop.ExtensionMethod;
+using Desktop.ViewReports;
 using Service.Models;
 using Service.Services;
 using System.Data;
@@ -35,7 +36,7 @@ namespace Desktop.Views
         {
             _usuarios = (await _usuarioService.GetAllAsync());
             _usuarios = _usuarios?.Where(u => _inscripciones != null && !_inscripciones.Any(i => i.UsuarioId == u.Id)).ToList();
-            GridUsuarios.DataSource = _usuarios.OrderBy(u=>u.Apellido).ThenBy(u=>u.Nombre).ToList();
+            GridUsuarios.DataSource = _usuarios.OrderBy(u => u.Apellido).ThenBy(u => u.Nombre).ToList();
             //ocultamos las columnas Id, DeleteDate, IsDeleted
             GridUsuarios.HideColumns("Id", "DeleteDate", "IsDeleted");
 
@@ -237,12 +238,20 @@ namespace Desktop.Views
         {
             if (e.Button == MouseButtons.Right)
             {
-                    //llamamos al menu contextual
-                    ContextMenuInscripcion.Show(GridInscripciones, new Point(e.X, e.Y));
-                
+                //llamamos al menu contextual
+                ContextMenuInscripcion.Show(GridInscripciones, new Point(e.X, e.Y));
+
             }
         }
 
+        private void BtnImprimirInscripciones_Click(object sender, EventArgs e)
+        {
+            // tomamos la capacitación seleccionada
+            var selectedCapacitacion = ComboCapacitaciones.SelectedItem as Capacitacion;
 
+            var inscripcionesViewReport = new InscripcionesViewReport(selectedCapacitacion);
+            inscripcionesViewReport.MdiParent = this.MdiParent;
+            inscripcionesViewReport.Show();
+        }
     }
 }
