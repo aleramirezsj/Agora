@@ -90,5 +90,10 @@ namespace Desktop.Views
                 BtnIniciarSesion.PerformClick(); // Simula el clic en el botón de iniciar sesión
             }
         }
+
+        private void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

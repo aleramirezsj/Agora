@@ -67,6 +67,7 @@
             BtnCancelar.Text = "Cancelar";
             BtnCancelar.TextAlign = ContentAlignment.MiddleRight;
             BtnCancelar.UseVisualStyleBackColor = false;
+            BtnCancelar.Click += BtnCancelar_Click;
             // 
             // BtnIniciarSesion
             // 
