@@ -43,9 +43,10 @@
             // 
             pictureBox1.BorderStyle = BorderStyle.FixedSingle;
             pictureBox1.Image = Properties.Resources.Generated_Image_September_02__2025___4_57PM_removebg_preview;
-            pictureBox1.Location = new Point(-31, -8);
+            pictureBox1.Location = new Point(-25, -6);
+            pictureBox1.Margin = new Padding(2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(430, 372);
+            pictureBox1.Size = new Size(344, 298);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
@@ -58,10 +59,10 @@
             BtnCancelar.IconColor = Color.Black;
             BtnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             BtnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnCancelar.Location = new Point(679, 246);
+            BtnCancelar.Location = new Point(543, 197);
             BtnCancelar.Margin = new Padding(2);
             BtnCancelar.Name = "BtnCancelar";
-            BtnCancelar.Size = new Size(182, 66);
+            BtnCancelar.Size = new Size(146, 53);
             BtnCancelar.TabIndex = 25;
             BtnCancelar.Text = "Cancelar";
             BtnCancelar.TextAlign = ContentAlignment.MiddleRight;
@@ -75,10 +76,10 @@
             BtnIniciarSesion.IconColor = Color.Black;
             BtnIniciarSesion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             BtnIniciarSesion.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnIniciarSesion.Location = new Point(441, 246);
+            BtnIniciarSesion.Location = new Point(353, 197);
             BtnIniciarSesion.Margin = new Padding(2);
             BtnIniciarSesion.Name = "BtnIniciarSesion";
-            BtnIniciarSesion.Size = new Size(184, 66);
+            BtnIniciarSesion.Size = new Size(147, 53);
             BtnIniciarSesion.TabIndex = 24;
             BtnIniciarSesion.Text = "Iniciar sesión";
             BtnIniciarSesion.TextAlign = ContentAlignment.MiddleRight;
@@ -88,10 +89,10 @@
             // CheckVerContraseña
             // 
             CheckVerContraseña.AutoSize = true;
-            CheckVerContraseña.Location = new Point(541, 187);
+            CheckVerContraseña.Location = new Point(433, 150);
             CheckVerContraseña.Margin = new Padding(2);
             CheckVerContraseña.Name = "CheckVerContraseña";
-            CheckVerContraseña.Size = new Size(154, 29);
+            CheckVerContraseña.Size = new Size(128, 24);
             CheckVerContraseña.TabIndex = 23;
             CheckVerContraseña.Text = "Ver contraseña";
             CheckVerContraseña.UseVisualStyleBackColor = true;
@@ -99,46 +100,48 @@
             // 
             // TxtPassword
             // 
-            TxtPassword.Location = new Point(541, 129);
+            TxtPassword.Location = new Point(433, 103);
             TxtPassword.Margin = new Padding(2);
             TxtPassword.Name = "TxtPassword";
             TxtPassword.PasswordChar = '*';
-            TxtPassword.Size = new Size(299, 31);
+            TxtPassword.Size = new Size(240, 27);
             TxtPassword.TabIndex = 22;
+            TxtPassword.KeyPress += TxtPassword_KeyPress;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(421, 129);
+            label2.Location = new Point(337, 103);
             label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(91, 25);
+            label2.Size = new Size(73, 20);
             label2.TabIndex = 21;
             label2.Text = "Password:";
             // 
             // TxtEmail
             // 
-            TxtEmail.Location = new Point(541, 62);
+            TxtEmail.Location = new Point(433, 50);
             TxtEmail.Margin = new Padding(2);
             TxtEmail.Name = "TxtEmail";
-            TxtEmail.Size = new Size(299, 31);
+            TxtEmail.Size = new Size(240, 27);
             TxtEmail.TabIndex = 20;
+            TxtEmail.KeyPress += TxtEmail_KeyPress;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(453, 62);
+            label1.Location = new Point(362, 50);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(58, 25);
+            label1.Size = new Size(49, 20);
             label1.TabIndex = 19;
             label1.Text = "Email:";
             // 
             // LoginView
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(888, 364);
+            ClientSize = new Size(710, 291);
             Controls.Add(BtnCancelar);
             Controls.Add(BtnIniciarSesion);
             Controls.Add(CheckVerContraseña);
@@ -148,6 +151,7 @@
             Controls.Add(label1);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(2);
             Name = "LoginView";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LoginView";
