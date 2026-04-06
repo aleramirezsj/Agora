@@ -42,6 +42,7 @@ namespace Desktop.Views
         {
             try
             {
+                this.Enabled = false;
                 UserCredential userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(TxtEmail.Text, TxtPassword.Text);
                 if (userCredential != null && !string.IsNullOrEmpty(userCredential.User.Uid))
                 {
@@ -60,6 +61,7 @@ namespace Desktop.Views
                     MessageBox.Show("Ha excedido el número máximo de intentos fallidos. La aplicación se cerrará.");
                     this.Close();
                 }
+                this.Enabled = true;
             }
         }
 
