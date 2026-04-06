@@ -65,8 +65,28 @@ namespace Desktop.Views
 
         private void CheckVerContraseña_CheckedChanged(object sender, EventArgs e)
         {
-            TxtPassword.PasswordChar = CheckVerContraseña.Checked? '\0':'*';
+            TxtPassword.PasswordChar = CheckVerContraseña.Checked ? '\0' : '*';
 
+        }
+
+        private void TxtEmail_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //si presiono enter, seleccioni el siguiente campo
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true; // Evita que se agregue un salto de línea
+                TxtPassword.Focus(); // Mueve el foco al campo de contraseña
+            }
+        }
+
+        private void TxtPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //si se presiona enter, se intenta iniciar sesión
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true; // Evita que se agregue un salto de línea
+                BtnIniciarSesion.PerformClick(); // Simula el clic en el botón de iniciar sesión
+            }
         }
     }
 }
