@@ -178,19 +178,19 @@ namespace Desktop.Views
                 {
                     if (await _tipoInscripcionService.RestoreAsync(entitySelected.Id))
                     {
-                        LabelStatusMessage.Text = $"Capacitación {entitySelected.Nombre} restaurada correctamente";
+                        LabelStatusMessage.Text = $"Tipo de inscripción {entitySelected.Nombre} restaurada correctamente";
                         TimerStatusBar.Start(); // Iniciar el temporizador para mostrar el mensaje en la barra de estado
                         await GetAllData();
                     }
                     else
                     {
-                        MessageBox.Show("Error al restaurar la capacitación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Error al restaurar el tipo de inscripción", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Debe seleccionar una capacitación para restaurarla", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debe seleccionar un tipo de inscripción para restaurarla", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
