@@ -22,7 +22,7 @@ namespace Backend.DataContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            base.OnModelCreating(modelBuilder);
 
             // Cargamos los datos iniciales de tipo de inscripciones(Público en general, Docentes, Estudiantes, Jubilados)
             modelBuilder.Entity<TipoInscripcion>().HasData(
