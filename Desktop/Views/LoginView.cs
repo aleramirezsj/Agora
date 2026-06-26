@@ -1,5 +1,7 @@
 ﻿using Firebase.Auth;
 using Firebase.Auth.Providers;
+using Microsoft.Extensions.Caching.Memory;
+using Service.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,28 +16,15 @@ namespace Desktop.Views
 {
     public partial class LoginView : Form
     {
-        FirebaseAuthClient _firebaseAuthClient;
+        private readonly IMemoryCache? _memoryCache;
+        UsuarioService _usuarioService; 
         int loginFailsCount = 0;
 
-        public LoginView()
+        public LoginView(IMemoryCache memoryCache)
         {
+            _memoryCache = memoryCache;
+            _usuarioService = new UsuarioService(_memoryCache);
             InitializeComponent();
-            SettingFirebase();
-
-        }
-
-        private void SettingFirebase()
-        {
-            var config = new FirebaseAuthConfig()
-            {
-                ApiKey = Service.Properties.Resources.ApiKeyFirebase,
-                AuthDomain = Service.Properties.Resources.AuthDomainFirebase,
-                Providers = new FirebaseAuthProvider[]
-                {
-                    new EmailProvider()
-                }
-            };
-            _firebaseAuthClient = new FirebaseAuthClient(config);
         }
 
         private async void BtnIniciarSesion_Click(object sender, EventArgs e)
@@ -43,8 +32,8 @@ namespace Desktop.Views
             try
             {
                 this.Enabled = false;
-                UserCredential userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(TxtEmail.Text, TxtPassword.Text);
-                if (userCredential != null && !string.IsNullOrEmpty(userCredential.User.Uid))
+                var login= await _usuarioService.LoginInSystem(TxtEmail.Text, TxtPassword.Text);
+                if (login)
                 {
                     this.Hide();
                     var menuPrincipalView = new MenuPrincipalView();
@@ -52,7 +41,7 @@ namespace Desktop.Views
                     this.Close();
                 }
             }
-            catch (FirebaseAuthException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error al iniciar sesión. Verifique sus credenciales.");
                 loginFailsCount++;

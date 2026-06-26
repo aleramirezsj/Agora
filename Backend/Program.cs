@@ -1,5 +1,6 @@
 using Backend.Class;
 using Backend.DataContext;
+using DotNetEnv;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
-DotNetEnv.Env.Load();
+Env.Load();
 
 var firebaseJson = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
 
