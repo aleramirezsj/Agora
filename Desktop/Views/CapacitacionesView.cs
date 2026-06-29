@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Desktop.ExtensionMethod;
+using Microsoft.Extensions.Caching.Memory;
 using Service.Models;
 using Service.Services;
 
@@ -7,13 +8,15 @@ namespace Desktop.Views
 {
     public partial class CapacitacionesView : Form
     {
-        GenericService<Capacitacion> _capacitacionService = new();
-        GenericService<TipoInscripcion> _tipoInscripcionService = new();
+        GenericService<Capacitacion> _capacitacionService ;
+        GenericService<TipoInscripcion> _tipoInscripcionService ;
         Capacitacion? _currentCapacitacion;
         List<Capacitacion>? _capacitaciones;
 
-        public CapacitacionesView()
+        public CapacitacionesView(IMemoryCache memoryCache)
         {
+            _capacitacionService = new GenericService<Capacitacion>(memoryCache);
+            _tipoInscripcionService = new GenericService<TipoInscripcion>(memoryCache);
             InitializeComponent();
             _ = GetAllData();
             checkVerEliminados.CheckedChanged += DisplayHideControlsRestoreButton;

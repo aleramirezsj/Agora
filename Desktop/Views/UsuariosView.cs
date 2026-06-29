@@ -1,6 +1,7 @@
 ﻿using Desktop.ExtensionMethod;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
+using Microsoft.Extensions.Caching.Memory;
 using Service.Enums;
 using Service.Models;
 using Service.Services;
@@ -11,32 +12,21 @@ namespace Desktop.Views
 {
     public partial class UsuariosView : Form
     {
-        GenericService<Usuario> _usuarioService = new();
+        GenericService<Usuario> _usuarioService;
+        AuthService _authService;
         Usuario _currentUsuario;
         List<Usuario>? _usuarios;
-        FirebaseAuthClient _firebaseAuthClient;
+       
 
-        public UsuariosView()
+        public UsuariosView(IMemoryCache memoryCache)
         {
+            _usuarioService = new UsuarioService(memoryCache);
+            _authService = new AuthService(memoryCache);
             InitializeComponent();
             _ = GetAllData();
-            SettingFirebase();
             checkVerEliminados.CheckedChanged += DisplayHideControlsRestoreButton;
         }
 
-        private void SettingFirebase()
-        {
-            var config = new FirebaseAuthConfig()
-            {
-                ApiKey = Service.Properties.Resources.ApiKeyFirebase,
-                AuthDomain = Service.Properties.Resources.AuthDomainFirebase,
-                Providers = new FirebaseAuthProvider[]
-                {
-            new EmailProvider()
-                }
-            };
-            _firebaseAuthClient = new FirebaseAuthClient(config);
-        }
 
         private void DisplayHideControlsRestoreButton(object? sender, EventArgs e)
         {
@@ -195,12 +185,12 @@ namespace Desktop.Views
         {
             try
             {
-                var userCredential = await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(
+                var userCredential = await _authService.CreateUserWithEmailAndPasswordAsync(
                     nuevoUsuario.Email,
                     TxtPassword.Text.Trim(),
                     nuevoUsuario.Nombre + " " + nuevoUsuario.Apellido// Contraseña por defecto, se recomienda cambiarla luego
                 );
-                await SendVerificationEmailAsync(userCredential.User.GetIdTokenAsync().Result); // Enviar correo de verificación
+                await _authService.SendVerificationEmail(nuevoUsuario.Email); // Enviar correo de verificación
             }
             catch (FirebaseAuthException ex)
             {
@@ -210,18 +200,18 @@ namespace Desktop.Views
 
         private async Task UpdatePasswordInFirebase(Usuario usuarioAGuardar)
         {
-            try
-            {
-                var userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(
-                    usuarioAGuardar.Email,
-                    TxtPassword.Text.Trim()
-                );
-                await userCredential.User.ChangePasswordAsync(TxtPassword2.Text.Trim());
-            }
-            catch (FirebaseAuthException ex)
-            {
-                MessageBox.Show($"Error al actualizar la contraseña en Firebase: {ex.Reason}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //try
+            //{
+            //    var userCredential = await _authService.SignInWithEmailAndPasswordAsync(
+            //        usuarioAGuardar.Email,
+            //        TxtPassword.Text.Trim()
+            //    );
+            //    await userCredential.User.ChangePasswordAsync(TxtPassword2.Text.Trim());
+            //}
+            //catch (FirebaseAuthException ex)
+            //{
+            //    MessageBox.Show($"Error al actualizar la contraseña en Firebase: {ex.Reason}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private Usuario GetUserDataFromScreen()
@@ -363,21 +353,7 @@ namespace Desktop.Views
             }
         }
 
-        public async Task SendVerificationEmailAsync(string idToken)
-        {
-            var FirebaseApiKey = Service.Properties.Resources.ApiKeyFirebase;
-            var RequestUri = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + FirebaseApiKey;
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                var content = new StringContent("{\"requestType\":\"VERIFY_EMAIL\",\"idToken\":\"" + idToken + "\"}");
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-                var response = await client.PostAsync(RequestUri, content);
-                response.EnsureSuccessStatusCode();
-            }
-        }
+        
 
 
     }
