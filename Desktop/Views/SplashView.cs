@@ -23,7 +23,7 @@ namespace Desktop.Views
         private void timer_Tick(object sender, EventArgs e)
         {
             ProgressBar.Value += 2;
-            if(ProgressBar.Value == 100)
+            if(ProgressBar.Value > 99)
             {
                 Timer.Stop();
                 this.Hide();
